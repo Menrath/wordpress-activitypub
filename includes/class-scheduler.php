@@ -69,6 +69,14 @@ class Scheduler {
 			return;
 		}
 
+        // Check if post is in english language, when the polylang plugin is installed
+        $allowed_languages = array( 'en' );
+        if ( function_exists( 'pll_get_post_language' ) ) {
+            if ( ! \in_array( pll_get_post_language( $post->ID ), $allowed_languages, true ) ) {
+                return;
+            }
+        }
+
 		$type = false;
 
 		if ( 'publish' === $new_status && 'publish' !== $old_status ) {
