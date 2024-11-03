@@ -192,9 +192,12 @@ class Users {
 				}
 
 				// Check for http(s)://blog.example.com/.
+				$blog_actor     = new Blog();
+				$normalized_uri = normalize_url( $uri );
 				if (
-					normalize_url( site_url() ) === normalize_url( $uri ) ||
-					normalize_url( home_url() ) === normalize_url( $uri )
+					normalize_url( site_url() ) === $normalized_uri ||
+					normalize_url( home_url() ) === $normalized_uri ||
+					normalize_url( $blog_actor->get_id() ) === $normalized_uri
 				) {
 					return self::get_by_id( self::BLOG_USER_ID );
 				}

@@ -14,8 +14,12 @@ if ( \is_wp_error( $transformer ) ) {
 		404
 	);
 }
-$user   = \Activitypub\Collection\Users::get_by_id( $post->post_author );
-$object = $transformer->to_object();
+
+$object        = $transformer->to_object();
+$attributed_to = $object->get_attributed_to();
+$user_uri      = is_array( $attributed_to ) ? reset( $attributed_to )[0] : $attributed_to;
+$user          = \Activitypub\Collection\Users::get_by_resource( $user_uri );
+
 ?>
 <DOCTYPE html>
 <html>
