@@ -15,10 +15,8 @@ if ( \is_wp_error( $transformer ) ) {
 	);
 }
 
-$object        = $transformer->to_object();
-$attributed_to = $object->get_attributed_to();
-$user_uri      = is_array( $attributed_to ) ? reset( $attributed_to )[0] : $attributed_to;
-$user          = \Activitypub\Collection\Users::get_by_resource( $user_uri );
+$object = $transformer->to_object();
+$user   = $transformer->get_actor_object();
 
 ?>
 <DOCTYPE html>
