@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 * Improved content negotiation and AUTHORIZED_FETCH support for third-party plugins
+* Allow omitting replies in ActivityPub representations instead of setting them as empty.
 
 ### Fixed
 
