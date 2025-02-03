@@ -5,11 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [Unreleased]
 
 ### Changed
 
 * Manually granting `activitypub` cap no longer requires the receiving user to have `publish_post`.
+
+### Fixed
+
+* Negotiation of ActivityPub requests for custom post types when queried by the ActivityPub ID.
 
 ## [5.0.0] - 2025-02-03
 
@@ -22,7 +26,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Handle deletes from remote servers that leave behind an accessible Tombstone object.
 * No longer parses tags for post types that don't support Activitypub.
-* Negotiation of ActivityPub requests for custom post types when queried by the ActivityPub ID.
 * rel attribute will now contain no more than one "me" value.
 
 ## [4.7.3] - 2025-01-21
