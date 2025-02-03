@@ -11,10 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Manually granting `activitypub` cap no longer requires the receiving user to have `publish_post`.
 * Allow omitting replies in ActivityPub representations instead of setting them as empty.
+* Allow Base Transformer to handle WP_Term objects for transformation.
 
 ### Fixed
 
 * Negotiation of ActivityPub requests for custom post types when queried by the ActivityPub ID.
+* Avoid PHP warnings when using Debug mode and when the `actor` is not set.
 
 ## [5.0.0] - 2025-02-03
 
