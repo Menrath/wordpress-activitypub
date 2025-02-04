@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Negotiation of ActivityPub requests for custom post types when queried by the ActivityPub ID.
 * Avoid PHP warnings when using Debug mode and when the `actor` is not set.
 * No longer creates Outbox items when importing content/users.
+* Outbox is now capable of sending other object types that are not Base_Object.
 
 ## [5.0.0] - 2025-02-03
 

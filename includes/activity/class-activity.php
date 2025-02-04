@@ -151,14 +151,16 @@ class Activity extends Base_Object {
 	 * @see https://www.w3.org/TR/activitypub/#object-without-create
 	 *
 	 * @param array|string|Base_Object|Link|null $data Activity object.
+	 * @param string|null                        $object_class The full class path to a child of Base_Object.
 	 *
 	 * @return void
 	 */
-	public function set_object( $data ) {
+	public function set_object( $data, $object_class = null ) {
 		// Convert array to object.
 		if ( is_array( $data ) ) {
-			// Check if the item is an Activity or an Object.
-			if ( is_activity( $data ) ) {
+			if ( $object_class && class_exists( $object_class ) ) {
+				$data = $object_class::init_from_array( $data );
+			} elseif ( is_activity( $data ) ) { // Check if the item is an Activity or an Object.
 				$data = self::init_from_array( $data );
 			} elseif ( is_actor( $data ) ) {
 				$data = Actor::init_from_array( $data );
