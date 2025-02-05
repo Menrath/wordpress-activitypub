@@ -7,8 +7,6 @@
 
 namespace Activitypub\Collection;
 
-use Activitypub\Activity\Base_Object;
-
 /**
  * ActivityPub Outbox Collection
  *
@@ -53,12 +51,6 @@ class Outbox {
 				'activitypub_content_visibility' => $content_visibility,
 			),
 		);
-
-		$object_class = get_class( $activity_object );
-
-		if ( Base_Object::class !== $object_class ) {
-			$outbox_item['meta_input']['_activitypub_object_class'] = str_replace( '\\', '\\\\', $object_class );
-		}
 
 		$has_kses = false !== \has_filter( 'content_save_pre', 'wp_filter_post_kses' );
 		if ( $has_kses ) {

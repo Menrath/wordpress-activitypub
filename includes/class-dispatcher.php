@@ -60,13 +60,12 @@ class Dispatcher {
 				break;
 		}
 
-		$type         = \get_post_meta( $outbox_item->ID, '_activitypub_activity_type', true );
-		$object_class = \get_post_meta( $outbox_item->ID, '_activitypub_object_class', true );
-		$activity     = new Activity();
+		$type     = \get_post_meta( $outbox_item->ID, '_activitypub_activity_type', true );
+		$activity = new Activity();
 		$activity->set_type( $type );
 		$activity->set_id( $outbox_item->guid );
 		// Pre-fill the Activity with data (for example cc and to).
-		$activity->set_object( \json_decode( $outbox_item->post_content, true ), $object_class );
+		$activity->set_object( \json_decode( $outbox_item->post_content, true ) );
 		$activity->set_actor( Actors::get_by_id( $outbox_item->post_author )->get_id() );
 
 		// Use simple Object (only ID-URI) for Like and Announce.

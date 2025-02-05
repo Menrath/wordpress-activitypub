@@ -141,7 +141,6 @@ For reasons of data protection, it is not possible to see the followers of other
 * Fixed: Negotiation of ActivityPub requests for custom post types when queried by the ActivityPub ID.
 * Fixed: Avoid PHP warnings when using Debug mode and when the `actor` is not set.
 * Fixed: No longer creates Outbox items when importing content/users.
-* Fixed: Outbox is now capable of sending other object types that are not Base_Object.
 
 = 5.0.0 =
 
