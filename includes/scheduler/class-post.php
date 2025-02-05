@@ -15,7 +15,6 @@ use Activitypub\Transformer\Factory;
 
 use function Activitypub\add_to_outbox;
 use function Activitypub\is_post_disabled;
-use function Activitypub\get_wp_object_state;
 
 /**
  * Post scheduler class.
@@ -34,6 +33,7 @@ class Post {
 		\add_action( 'delete_attachment', array( self::class, 'transition_attachment_status' ) );
 
 		\add_action( 'post_activitypub_add_to_outbox', array( self::class, 'schedule_announce_activity' ), 10, 4 );
+		\add_action( 'activitypub_add_post_to_outbox', array( self::class, 'add_to_outbox' ), 10, 3 );
 
 		// Get all post types that support ActivityPub.
 		$post_types = \get_post_types_by_support( 'activitypub' );
@@ -104,8 +104,26 @@ class Post {
 			return;
 		}
 
+		$hook = 'activitypub_add_post_to_outbox';
+		$args = array( $post, $type, $post->post_author );
+
+		if ( false === \wp_next_scheduled( $hook, $args ) ) {
+			\wp_schedule_single_event( \time() + 5, $hook, $args );
+		}
+	}
+
+	/**
+	 * Add an object to the outbox.
+	 *
+	 * @param mixed   $data               The object to add to the outbox.
+	 * @param string  $activity_type      The type of the Activity.
+	 * @param integer $user_id            The User-ID.
+	 * @param string  $content_visibility The visibility of the content. See `constants.php` for possible values: `ACTIVITYPUB_CONTENT_VISIBILITY_*`.
+	 *
+	 */
+	public static function add_to_outbox( $post, $activity_type, $user_id ) {
 		// Add the post to the outbox.
-		add_to_outbox( $post, $type, $post->post_author );
+		add_to_outbox( $post, $activity_type, $user_id );
 	}
 
 	/**
