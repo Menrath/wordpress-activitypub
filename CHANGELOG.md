@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+* Cleanup of option values when the plugin is uninstalled.
+* Third-party plugins can filter settings tabs to add their own settings pages for ActivityPub.
+
 ### Changed
 
 * Manually granting `activitypub` cap no longer requires the receiving user to have `publish_post`.
@@ -17,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Negotiation of ActivityPub requests for custom post types when queried by the ActivityPub ID.
 * Avoid PHP warnings when using Debug mode and when the `actor` is not set.
+* No longer creates Outbox items when importing content/users.
 
 ## [5.0.0] - 2025-02-03
 
