@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Cleanup of option values when the plugin is uninstalled.
 * Third-party plugins can filter settings tabs to add their own settings pages for ActivityPub.
+* Show ActivityPub preview in row actions, when block editor enabled but is not used for post type.
 
 ### Changed
 
