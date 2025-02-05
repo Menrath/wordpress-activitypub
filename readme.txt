@@ -138,6 +138,7 @@ For reasons of data protection, it is not possible to see the followers of other
 * Added: Show ActivityPub preview in row actions, when block editor enabled but is not used for post type.
 * Changed: Manually granting `activitypub` cap no longer requires the receiving user to have `publish_post`.
 * Changed: Allow Base Transformer to handle WP_Term objects for transformation.
+* Changed: Allow omitting replies in ActivityPub representations instead of setting them as empty.
 * Fixed: Negotiation of ActivityPub requests for custom post types when queried by the ActivityPub ID.
 * Fixed: Avoid PHP warnings when using Debug mode and when the `actor` is not set.
 * Fixed: No longer creates Outbox items when importing content/users.
