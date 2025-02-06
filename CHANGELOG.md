@@ -7,12 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+* Fixed an issue where the outbox could not send object types other than `Base_Object` (introduced in 5.0.0).
+
+## [5.1.0] - 2025-02-06
+
 ### Added
 
 * Cleanup of option values when the plugin is uninstalled.
 * Third-party plugins can filter settings tabs to add their own settings pages for ActivityPub.
 * Show ActivityPub preview in row actions when Block Editor is enabled but not used for the post type.
-*
+
 ### Changed
 
 * Manually granting `activitypub` cap no longer requires the receiving user to have `publish_post`.
@@ -25,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Negotiation of ActivityPub requests for custom post types when queried by the ActivityPub ID.
 * Avoid PHP warnings when using Debug mode and when the `actor` is not set.
 * No longer creates Outbox items when importing content/users.
-* Outbox is now capable of sending other object types that are not Base_Object.
+* Fix NodeInfo 2.0 URL to be HTTP instead of HTTPS.
 
 ## [5.0.0] - 2025-02-03
 
@@ -1270,8 +1276,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * initial
 
-[Unreleased]: https://github.com/Automattic/wordpress-activitypub/compare/5.0.0...trunk
+[Unreleased]: https://github.com/Automattic/wordpress-activitypub/compare/5.1.0...trunk
 <!-- Add new release below and update "Unreleased" link -->
+[5.1.0]: https://github.com/Automattic/wordpress-activitypub/compare/5.0.0...5.1.0
 [5.0.0]: https://github.com/Automattic/wordpress-activitypub/compare/4.7.3...5.0.0
 [4.7.3]: https://github.com/Automattic/wordpress-activitypub/compare/4.7.2...4.7.3
 [4.7.2]: https://github.com/Automattic/wordpress-activitypub/compare/4.7.1...4.7.2
