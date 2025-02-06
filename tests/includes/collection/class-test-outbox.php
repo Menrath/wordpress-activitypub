@@ -43,9 +43,9 @@ class Test_Outbox extends \Activitypub\Tests\ActivityPub_Outbox_TestCase {
 
 		$activity = json_decode( $post->post_content );
 
-		if ( is_array( $data) ) {
+		if ( is_array( $data ) ) {
 			$this->assertSame( $data['content'], $activity->content );
-		} elseif ( $data instanceof Base_Object) {
+		} elseif ( $data instanceof Base_Object ) {
 			$this->assertSame( $data->get_content(), $activity->content );
 		}
 		$this->assertEquals( $type, \get_post_meta( $id, '_activitypub_activity_type', true ) );
@@ -118,7 +118,7 @@ class Test_Outbox extends \Activitypub\Tests\ActivityPub_Outbox_TestCase {
 						'timezone'  => 'Europe/Vienna',
 						'joinMode'  => 'external',
 						'category'  => 'MOVEMENTS_POLITICS',
-						'content'  => '<p>You should not miss this Event!</p>',
+						'content'   => '<p>You should not miss this Event!</p>',
 					)
 				),
 				'Create',
