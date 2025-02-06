@@ -612,7 +612,7 @@ class Activitypub {
 						return $value;
 					}
 
-					return \Activitypub\Activity\Base_Object::class;
+					return '';
 				},
 			)
 		);
