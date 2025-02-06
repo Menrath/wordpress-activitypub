@@ -7,6 +7,8 @@
 
 namespace Activitypub\Tests\Collection;
 
+use Activitypub\Activity\Extended_Object\Event;
+
 /**
  * Test class for Outbox collection.
  *
@@ -46,6 +48,13 @@ class Test_Outbox extends \Activitypub\Tests\ActivityPub_Outbox_TestCase {
 		// Fall back to blog if user does not have the activitypub capability.
 		$actor_type = \user_can( $user_id, 'activitypub' ) ? 'user' : 'blog';
 		$this->assertEquals( $actor_type, \get_post_meta( $id, '_activitypub_activity_actor', true ) );
+
+		if ( $data instanceof Event ) {
+			$this->assertEquals( Event::class, \get_post_meta( $id, '_activitypub_object_class', true ) );
+			$this->assertEquals( $data->get_timezone(), $activity->timezone );
+			$this->assertCount( count( $data->get_location() ), $activity->location );
+			$this->assertIsArray( $data->get_location()[0]['address'] );
+		}
 	}
 
 	/**
@@ -76,6 +85,42 @@ class Test_Outbox extends \Activitypub\Tests\ActivityPub_Outbox_TestCase {
 				'Create',
 				2,
 				'{"@context":["https:\/\/www.w3.org\/ns\/activitystreams",{"Hashtag":"as:Hashtag","sensitive":"as:sensitive"}],"id":"https:\/\/example.com\/2","type":"Note","content":"\u003Cp\u003EThis is another note\u003C\/p\u003E","contentMap":{"en":"\u003Cp\u003EThis is another note\u003C\/p\u003E"},"tag":[],"to":["https:\/\/www.w3.org\/ns\/activitystreams#Public"],"cc":[],"mediaType":"text\/html","sensitive":false}',
+			),
+			array(
+				Event::init_from_array(
+					array(
+						'id'        => 'https://example.com/3',
+						'name'      => 'WP Test Event',
+						'type'      => 'Event',
+						'location'  => array(
+							array(
+								'id'           => 'https://example.com/place/1',
+								'type'         => 'Place',
+								'attributedTo' => 'https://wp-test.event-federation.eu/@test',
+								'name'         => 'Fediverse Place',
+								'address'      => array(
+									'type'            => 'PostalAddress',
+									'addressCountry'  => 'FediCountry',
+									'addressLocality' => 'FediTown',
+									'postalCode'      => '1337',
+									'streetAddress'   => 'FediStreet',
+								),
+							),
+							array(
+								'type' => 'VirtualLocation',
+								'url'  => 'https://example.com/VirtualMeetingRoom',
+							),
+						),
+						'startTime' => '2030-02-29T16:00:00+01:00',
+						'endTime'   => '2030-02-29T17:00:00+01:00',
+						'timezone'  => 'Europe/Vienna',
+						'joinMode'  => 'external',
+						'category'  => 'MOVEMENTS_POLITICS',
+					)
+				),
+				'Create',
+				1,
+				'{"id":"https://example.com/3","name":"WP Test Event","type":"Event","location":[{"id":"https://example.com/place/1","type":"Place","attributedTo":"https://wp-test.event-federation.eu/@test","name":"Fediverse Place","address":{"type":"PostalAddress","addressCountry":"FediCountry","addressLocality":"FediTown","postalCode":"1337","streetAddress":"FediStreet"}},{"type":"VirtualLocation","url":"https://example.com/VirtualMeetingRoom"}],"startTime":"2030-02-29T16:00:00+01:00","endTime":"2030-02-29T17:00:00+01:00","timezone":"Europe/Vienna","joinMode":"external","category":"MOVEMENTS_POLITICS"}',
 			),
 		);
 	}
