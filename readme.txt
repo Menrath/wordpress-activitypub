@@ -129,7 +129,7 @@ For reasons of data protection, it is not possible to see the followers of other
 
 == Changelog ==
 
-= 5.1.0 =
+= Unreleased =
 
 * Fixed an issue where the outbox could not send object types other than `Base_Object` (introduced in 5.0.0).
 
