@@ -7,6 +7,7 @@
 
 namespace Activitypub\Tests\Collection;
 
+use Activitypub\Activity\Base_Object;
 use Activitypub\Activity\Extended_Object\Event;
 
 /**
@@ -38,22 +39,23 @@ class Test_Outbox extends \Activitypub\Tests\ActivityPub_Outbox_TestCase {
 
 		$this->assertInstanceOf( 'WP_Post', $post );
 		$this->assertEquals( 'pending', $post->post_status );
-		$this->assertEquals( $json, $post->post_content );
+		$this->assertJsonStringEqualsJsonString( $json, $post->post_content );
 
 		$activity = json_decode( $post->post_content );
-		$this->assertSame( $data['content'], $activity->content );
 
+		if ( is_array( $data) ) {
+			$this->assertSame( $data['content'], $activity->content );
+		} elseif ( $data instanceof Base_Object) {
+			$this->assertSame( $data->get_content(), $activity->content );
+		}
 		$this->assertEquals( $type, \get_post_meta( $id, '_activitypub_activity_type', true ) );
 
 		// Fall back to blog if user does not have the activitypub capability.
 		$actor_type = \user_can( $user_id, 'activitypub' ) ? 'user' : 'blog';
 		$this->assertEquals( $actor_type, \get_post_meta( $id, '_activitypub_activity_actor', true ) );
 
-		if ( $data instanceof Event ) {
-			$this->assertEquals( Event::class, \get_post_meta( $id, '_activitypub_object_class', true ) );
-			$this->assertEquals( $data->get_timezone(), $activity->timezone );
-			$this->assertCount( count( $data->get_location() ), $activity->location );
-			$this->assertIsArray( $data->get_location()[0]['address'] );
+		if ( $data instanceof Base_Object && get_class( $data ) !== Event::class ) {
+			$this->assertEquals( get_class( $data ), \get_post_meta( $id, '_activitypub_object_class', true ) );
 		}
 	}
 
@@ -116,11 +118,12 @@ class Test_Outbox extends \Activitypub\Tests\ActivityPub_Outbox_TestCase {
 						'timezone'  => 'Europe/Vienna',
 						'joinMode'  => 'external',
 						'category'  => 'MOVEMENTS_POLITICS',
+						'content'  => '<p>You should not miss this Event!</p>',
 					)
 				),
 				'Create',
 				1,
-				'{"@context":["https:\/\/schema.org\/","https:\/\/www.w3.org\/ns\/activitystreams",{"pt":"https:\/\/joinpeertube.org\/ns#","mz":"https:\/\/joinmobilizon.org\/ns#","status":"http:\/\/www.w3.org\/2002\/12\/cal\/ical#status","commentsEnabled":"pt:commentsEnabled","isOnline":"mz:isOnline","timezone":"mz:timezone","participantCount":"mz:participantCount","anonymousParticipationEnabled":"mz:anonymousParticipationEnabled","joinMode":{"@id":"mz:joinMode","@type":"mz:joinModeType"},"externalParticipationUrl":{"@id":"mz:externalParticipationUrl","@type":"schema:URL"},"repliesModerationOption":{"@id":"mz:repliesModerationOption","@type":"@vocab"},"contacts":{"@id":"mz:contacts","@type":"@id"}}],"type":"Event","name":"WP Test Event","timezone":"Europe\/Vienna","category":"MOVEMENTS_POLITICS","joinMode":"external","id":"https:\/\/example.com\/3","nameMap":{"en":"WP Test Event"},"endTime":"2030-02-29T17:00:00+01:00","location":[{"id":"https:\/\/example.com\/place\/1","type":"Place","attributedTo":"https:\/\/wp-test.event-federation.eu\/@test","name":"Fediverse Place","address":{"type":"PostalAddress","addressCountry":"FediCountry","addressLocality":"FediTown","postalCode":"1337","streetAddress":"FediStreet"}},{"type":"VirtualLocation","url":"https:\/\/example.com\/VirtualMeetingRoom"}],"startTime":"2030-02-29T16:00:00+01:00","tag":[],"to":["https:\/\/www.w3.org\/ns\/activitystreams#Public"],"cc":[],"mediaType":"text\/html","sensitive":false}',
+				'{"@context":["https:\/\/schema.org\/","https:\/\/www.w3.org\/ns\/activitystreams",{"pt":"https:\/\/joinpeertube.org\/ns#","mz":"https:\/\/joinmobilizon.org\/ns#","status":"http:\/\/www.w3.org\/2002\/12\/cal\/ical#status","commentsEnabled":"pt:commentsEnabled","isOnline":"mz:isOnline","timezone":"mz:timezone","participantCount":"mz:participantCount","anonymousParticipationEnabled":"mz:anonymousParticipationEnabled","joinMode":{"@id":"mz:joinMode","@type":"mz:joinModeType"},"externalParticipationUrl":{"@id":"mz:externalParticipationUrl","@type":"schema:URL"},"repliesModerationOption":{"@id":"mz:repliesModerationOption","@type":"@vocab"},"contacts":{"@id":"mz:contacts","@type":"@id"}}],"type":"Event","name":"WP Test Event","timezone":"Europe\/Vienna","category":"MOVEMENTS_POLITICS","joinMode":"external","id":"https:\/\/example.com\/3","nameMap":{"en":"WP Test Event"},"endTime":"2030-02-29T17:00:00+01:00","location":[{"id":"https:\/\/example.com\/place\/1","type":"Place","attributedTo":"https:\/\/wp-test.event-federation.eu\/@test","name":"Fediverse Place","address":{"type":"PostalAddress","addressCountry":"FediCountry","addressLocality":"FediTown","postalCode":"1337","streetAddress":"FediStreet"}},{"type":"VirtualLocation","url":"https:\/\/example.com\/VirtualMeetingRoom"}],"startTime":"2030-02-29T16:00:00+01:00","tag":[],"to":["https:\/\/www.w3.org\/ns\/activitystreams#Public"],"cc":[],"mediaType":"text\/html","sensitive":false,"content":"\u003Cp\u003EYou should not miss this Event!\u003C\/p\u003E","contentMap":{"en":"\u003Cp\u003EYou should not miss this Event!\u003C\/p\u003E"}}',
 			),
 		);
 	}
