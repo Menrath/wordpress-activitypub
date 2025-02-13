@@ -78,15 +78,15 @@ class Test_Base_Object extends \WP_UnitTestCase {
 	 */
 	public function test_init_from_array() {
 		$test_data = array(
-			'id'          => 'https://example.com/test',
-			'type'        => 'Test',
-			'name'        => 'Test Name',
-			'summary'     => 'Test Summary',
-			'content'     => 'Test Content',
-			'published'   => '2024-03-20T12:00:00Z',
-			'to'          => array( 'https://example.com/user1' ),
-			'cc'          => array( 'https://example.com/user2' ),
-			'attachment'  => array(
+			'id'           => 'https://example.com/test',
+			'type'         => 'Test',
+			'name'         => 'Test Name',
+			'summary'      => 'Test Summary',
+			'content'      => 'Test Content',
+			'published'    => '2024-03-20T12:00:00Z',
+			'to'           => array( 'https://example.com/user1' ),
+			'cc'           => array( 'https://example.com/user2' ),
+			'attachment'   => array(
 				array(
 					'type' => 'Image',
 					'url'  => 'https://example.com/image.jpg',
@@ -98,7 +98,7 @@ class Test_Base_Object extends \WP_UnitTestCase {
 
 		$object = Base_Object::init_from_array( $test_data );
 
-		// Test if all attributes are set correctly
+		// Test if all attributes are set correctly.
 		$this->assertEquals( $test_data['id'], $object->get_id() );
 		$this->assertEquals( $test_data['type'], $object->get_type() );
 		$this->assertEquals( $test_data['name'], $object->get_name() );

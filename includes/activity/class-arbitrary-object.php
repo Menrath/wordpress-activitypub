@@ -27,7 +27,7 @@ class Arbitrary_Object {
 	 * @var array
 	 */
 	const JSON_LD_CONTEXT = array(
-		'https://www.w3.org/ns/activitystreams'
+		'https://www.w3.org/ns/activitystreams',
 	);
 
 	/**
