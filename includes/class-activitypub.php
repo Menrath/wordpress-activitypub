@@ -607,28 +607,6 @@ class Activitypub {
 			)
 		);
 
-		/**
-		 * Register ActivityPub object class for Outbox items.
-		 *
-		 * @see https://www.w3.org/TR/activitystreams-vocabulary/#object-types
-		 */
-		\register_post_meta(
-			Outbox::POST_TYPE,
-			'_activitypub_object_class',
-			array(
-				'type'              => 'string',
-				'description'       => 'The full class name of the object class',
-				'single'            => true,
-				'sanitize_callback' => function ( $value ) {
-					if ( class_exists( $value ) ) {
-						return $value;
-					}
-
-					return '';
-				},
-			)
-		);
-
 		\register_post_meta(
 			Outbox::POST_TYPE,
 			'_activitypub_activity_actor',

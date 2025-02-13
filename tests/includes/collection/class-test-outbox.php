@@ -53,10 +53,6 @@ class Test_Outbox extends \Activitypub\Tests\ActivityPub_Outbox_TestCase {
 		// Fall back to blog if user does not have the activitypub capability.
 		$actor_type = \user_can( $user_id, 'activitypub' ) ? 'user' : 'blog';
 		$this->assertEquals( $actor_type, \get_post_meta( $id, '_activitypub_activity_actor', true ) );
-
-		if ( $data instanceof Base_Object && get_class( $data ) !== Event::class ) {
-			$this->assertEquals( get_class( $data ), \get_post_meta( $id, '_activitypub_object_class', true ) );
-		}
 	}
 
 	/**

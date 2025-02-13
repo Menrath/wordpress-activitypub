@@ -7,7 +7,6 @@
 
 namespace Activitypub\Collection;
 
-use Activitypub\Activity\Base_Object;
 use Activitypub\Dispatcher;
 
 use function Activitypub\is_activity;
