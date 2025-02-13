@@ -11,7 +11,6 @@ use Activitypub\Dispatcher;
 
 use function Activitypub\is_activity;
 
-
 /**
  * ActivityPub Outbox Collection
  *
