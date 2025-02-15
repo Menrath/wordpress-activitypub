@@ -1,6 +1,6 @@
 <?php
 /**
- * Test Arbitrary Object.
+ * Test Generic Object.
  *
  * @package ActivityPub
  */
@@ -10,9 +10,9 @@ namespace Activitypub\Activity;
 use WP_UnitTestCase;
 
 /**
- * Test cases for the Arbitrary_Object class.
+ * Test cases for the Generic_Object class.
  */
-class Test_Arbitrary_Object extends WP_UnitTestCase {
+class Test_Generic_Object extends WP_UnitTestCase {
 	/**
 	 * Test if init_from_array correctly sets all attributes.
 	 */
@@ -36,7 +36,7 @@ class Test_Arbitrary_Object extends WP_UnitTestCase {
 			'unsupported'  => 'unsupported',
 		);
 
-		$object = Arbitrary_Object::init_from_array( $test_data );
+		$object = Generic_Object::init_from_array( $test_data );
 
 		// Test if all attributes are set correctly.
 		$this->assertEquals( $test_data['id'], $object->get_id() );
@@ -56,7 +56,7 @@ class Test_Arbitrary_Object extends WP_UnitTestCase {
 	 * Test if init_from_array handles invalid input correctly.
 	 */
 	public function test_init_from_array_invalid_input() {
-		$result = Arbitrary_Object::init_from_array( 'not an array' );
+		$result = Generic_Object::init_from_array( 'not an array' );
 		$this->assertWPError( $result );
 		$this->assertEquals( 'invalid_array', $result->get_error_code() );
 	}
@@ -73,7 +73,7 @@ class Test_Arbitrary_Object extends WP_UnitTestCase {
 			'content' => false,
 		);
 
-		$object = Arbitrary_Object::init_from_array( $test_data );
+		$object = Generic_Object::init_from_array( $test_data );
 
 		$this->assertEquals( $test_data['id'], $object->get_id() );
 		$this->assertEquals( $test_data['type'], $object->get_type() );
@@ -92,7 +92,7 @@ class Test_Arbitrary_Object extends WP_UnitTestCase {
 			'mediaType'    => 'text/html',
 		);
 
-		$object = Arbitrary_Object::init_from_array( $test_data );
+		$object = Generic_Object::init_from_array( $test_data );
 
 		$this->assertEquals( $test_data['attributedTo'], $object->get_attributed_to() );
 		$this->assertEquals( $test_data['inReplyTo'], $object->get_in_reply_to() );
@@ -109,7 +109,7 @@ class Test_Arbitrary_Object extends WP_UnitTestCase {
 			'mediaType'    => 'text/html',
 		);
 
-		$object = Arbitrary_Object::init_from_array( $test_data );
+		$object = Generic_Object::init_from_array( $test_data );
 
 		$array = $object->to_array();
 

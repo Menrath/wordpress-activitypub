@@ -21,7 +21,7 @@ namespace Activitypub\Activity;
  *
  * @see https://www.w3.org/TR/activitystreams-core/#object
  */
-class Base_Object extends Arbitrary_Object {
+class Base_Object extends Generic_Object {
 	/**
 	 * The JSON-LD context for the object.
 	 *

@@ -1,6 +1,6 @@
 <?php
 /**
- * Arbitrary Object.
+ * Generic Object.
  *
  * @package Activitypub
  */
@@ -11,16 +11,16 @@ use function Activitypub\camel_to_snake_case;
 use function Activitypub\snake_to_camel_case;
 
 /**
- * Arbitrary Object.
+ * Generic Object.
  *
- * This class is used to create arbitrary objects.
+ * This class is used to create Generic Objects.
  * It is used to create objects that might be unknown by the plugin but
  * conform to the ActivityStreams vocabulary.
  *
  * @since Unreleased
  */
 #[AllowDynamicProperties]
-class Arbitrary_Object {
+class Generic_Object {
 	/**
 	 * The JSON-LD context for the object.
 	 *

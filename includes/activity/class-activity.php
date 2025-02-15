@@ -164,7 +164,7 @@ class Activity extends Base_Object {
 	public function set_object( $data ) {
 		// Convert array to object.
 		if ( is_array( $data ) ) {
-			$data = Arbitrary_Object::init_from_array( $data );
+			$data = Generic_Object::init_from_array( $data );
 		}
 
 		// Set object.
