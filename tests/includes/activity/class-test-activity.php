@@ -54,9 +54,9 @@ class Test_Activity extends \WP_UnitTestCase {
 	 */
 	public function test_object_transformation() {
 		$test_array = array(
-			'id'        => 'https://example.com/post/123',
-			'type'      => 'Note',
-			'content'   => 'Hello world!',
+			'id'      => 'https://example.com/post/123',
+			'type'    => 'Note',
+			'content' => 'Hello world!',
 		);
 
 		$object = \Activitypub\Activity\Base_Object::init_from_array( $test_array );
