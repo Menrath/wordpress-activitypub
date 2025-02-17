@@ -117,6 +117,10 @@ class Generic_Object {
 	 * @return mixed The value.
 	 */
 	public function add( $key, $value ) {
+		if ( empty( $value ) ) {
+			return;
+		}
+
 		if ( ! isset( $this->$key ) ) {
 			$this->$key = array();
 		}
