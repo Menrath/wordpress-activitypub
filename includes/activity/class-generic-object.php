@@ -19,7 +19,7 @@ use function Activitypub\snake_to_camel_case;
  *
  * @since Unreleased
  */
-#[AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class Generic_Object {
 	/**
 	 * The JSON-LD context for the object.
