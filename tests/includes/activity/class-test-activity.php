@@ -57,7 +57,6 @@ class Test_Activity extends \WP_UnitTestCase {
 			'id'        => 'https://example.com/post/123',
 			'type'      => 'Note',
 			'content'   => 'Hello world!',
-			'sensitive' => false,
 		);
 
 		$object = \Activitypub\Activity\Base_Object::init_from_array( $test_array );

@@ -392,7 +392,7 @@ class Base_Object extends Generic_Object {
 	 *
 	 * @var boolean
 	 */
-	protected $sensitive = false;
+	protected $sensitive;
 
 	/**
 	 * Generic getter.
