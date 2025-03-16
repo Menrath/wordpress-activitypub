@@ -25,7 +25,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           coverage: none
-          tools: composer, phpunit-polyfills
+          tools: composer, phpunit-polyfills, cs2pr
           extensions: dom, iconv, json, libxml, zip
 
       - name: Install Composer dependencies for PHP
