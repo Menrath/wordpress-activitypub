@@ -1,0 +1,76 @@
+name: PHPstan
+on:
+  push:
+    branches:
+      - trunk
+  pull_request:
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: ['7.4', '8.2', '8.4']
+    name: PHPStan for WordPress ${{ matrix.php-version }}
+    steps:
+      - name: Checkout
+        uses: https://code.forgejo.org/actions/checkout@v4
+
+      - name: Cache WordPress Setup and installed plugins (Event plugins and ActivityPub plugin).
+        id: cache-wordpress
+        uses: https://code.forgejo.org/actions/cache@v4
+        with:
+          path: |
+            ${{ env.WP_CORE_DIR }}
+            ${{ env.WP_TESTS_DIR }}
+          key: cache-phpstan-wordpress-6.7-activitypub-5.4.1-0
+
+      - name: Cache Composer
+        id: cache-composer
+        uses: https://code.forgejo.org/actions/cache@v4
+        with:
+          path: |
+            ./vendor/
+          key: cache-composer-3
+
+      - name: Setup cache environment for PHP Extensions
+        id: php-extensions-cache
+        uses: https://github.com/shivammathur/cache-extensions@v1
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: dom, iconv, json, libxml, zip
+          key: php-extensions-cache-v1
+
+      - name: Cache PHP extensions
+        uses: https://code.forgejo.org/actions/cache@v4
+        with:
+          path: ${{ steps.php-extensions-cache.outputs.dir }}
+          key: ${{ steps.php-extensions-cache.outputs.key }}
+          restore-keys: ${{ steps.php-extensions-cache.outputs.key }}
+
+      - name: Setup PHP
+        uses: https://github.com/shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: dom, iconv, json, libxml, zip
+          coverage: none
+          tools: composer, cs2pr
+
+      - name: Install Composer dependencies for PHP
+        if: steps.cache-composer.outputs.cache-hit != 'true'
+        uses: ramsey/composer-install@v3
+
+      - name: Log debug information
+        run: |
+          git --version
+          php --version
+          composer --version
+
+      - name: Install third party plugins, so that PHP Stan finds that functions
+        if: steps.cache-wordpress.outputs.cache-hit != 'true'
+        run: bash bin/install-wp-tests.sh wordpress_test root root 127.0.0.1 latest true false false true
+
+      - name: Running PHPStan Analyze
+        if: ${{ success() || failure() }}
+        run: |
+          ./vendor/bin/phpstan --version
+          ./vendor/bin/phpstan analyze -vv --memory-limit=2G --error-format=checkstyle | cs2pr
