@@ -1,11 +1,12 @@
 <?php
 /**
- * Constants, functions, etc. used by GatherPress
+ * Constants, functions, etc. used by ActivityPub
  * should be understood by PHPStan.
  */
 
 namespace {
     define( 'ACTIVITYPUB_PLUGIN_DIR', './' );
+    define( 'ACTIVITYPUB_PLUGIN_VERSION', '5.5.0' );
     define( 'ACTIVITYPUB_PLUGIN_BASENAME', 'ActivityPub' );
     define( 'ACTIVITYPUB_PLUGIN_FILE', './activitypub' );
     define( 'ACTIVITYPUB_PLUGIN_URL', '');

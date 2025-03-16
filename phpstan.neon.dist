@@ -35,8 +35,14 @@ parameters:
 			identifier: variable.undefined
 			path: includes/class-signature.php
 		-
+			identifier: isset.variable
+			path: includes/class-signature.php
+		-
 			identifier: method.notFound
 			path: includes/transformer/class-base.php
+		-
+			identifier: method.notFound
+			path: includes/activity/class-generic-object.php
 
 	parallel:
 		maximumNumberOfProcesses: 1
@@ -44,7 +50,7 @@ parameters:
 
 	# the analysis level, from 0 (loose) to 9 (strict)
 	# https://phpstan.org/user-guide/rule-levels
-	level: 0
+	level: 1
 
 	paths:
 		- includes/
