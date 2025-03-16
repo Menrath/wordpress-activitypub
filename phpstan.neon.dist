@@ -29,4 +29,5 @@ parameters:
 
 	paths:
 		- includes/
+		- integration/
 		- templates/
