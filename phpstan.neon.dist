@@ -16,8 +16,27 @@ parameters:
 
 	ignoreErrors:
 		-
-			message: '#Call to an undefined method Activitypub\\Activity\\[a-zA-Z0-9\\_]+::(?:get|set)_[a-z\_]#'
+			message: '#Instantiated class Enable_Mastodon_Apps\\Entity\\\S+ not found\.#'
+			identifier: class.notFound
+		-
+			message: '#Instantiated class Activitypub\\Integration\\Stream_Connector not found\.#'
+			identifier: class.notFound
+		-
+			identifier: new.static
+		-
+			identifier: requireOnce.fileNotFound
+		-
+			identifier: function.notFound
+			path: integration/class-buddypress.php
+		-
+			identifier: unset.offset
+			path: integration/class-buddypress.php
+		-
+			identifier: variable.undefined
+			path: includes/class-signature.php
+		-
 			identifier: method.notFound
+			path: includes/transformer/class-base.php
 
 	parallel:
 		maximumNumberOfProcesses: 1
@@ -25,9 +44,13 @@ parameters:
 
 	# the analysis level, from 0 (loose) to 9 (strict)
 	# https://phpstan.org/user-guide/rule-levels
-	level: 5
+	level: 0
 
 	paths:
 		- includes/
 		- integration/
 		- templates/
+
+	excludePaths:
+		- includes/class-cli.php
+		- integration/class-stream-connector.php

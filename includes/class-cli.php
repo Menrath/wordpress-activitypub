@@ -70,11 +70,13 @@ class Cli extends WP_CLI_Command {
 		switch ( $args[0] ) {
 			case 'delete':
 				WP_CLI::confirm( 'Do you really want to delete the (Custom) Post with the ID: ' . $args[1] );
-				Post::schedule_post_activity( 'trash', 'publish', $post );
+				$updated              = clone $post;
+				$updated->post_status = 'trash';
+				Post::schedule_post_activity( $updated->ID, $updated, false, $post );
 				WP_CLI::success( '"Delete" activity is queued.' );
 				break;
 			case 'update':
-				Post::schedule_post_activity( 'publish', 'publish', $post );
+				Post::schedule_post_activity( $post->ID, $post, true, $post );
 				WP_CLI::success( '"Update" activity is queued.' );
 				break;
 			default:
