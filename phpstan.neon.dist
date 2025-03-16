@@ -30,6 +30,3 @@ parameters:
 	paths:
 		- includes/
 		- templates/
-
-	scanDirectories:
-		- /workspace/wordpress/wp-content/plugins/
