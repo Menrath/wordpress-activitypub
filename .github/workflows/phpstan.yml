@@ -12,6 +12,11 @@ jobs:
         php-version: ['7.4', '8.2', '8.4']
     name: PHPStan for WordPress ${{ matrix.php-version }}
     steps:
+      - name: Install svn
+        run: |
+          sudo apt-get update
+          sudo apt-get install subversion
+  
       - name: Checkout
         uses: actions/checkout@v4
 
