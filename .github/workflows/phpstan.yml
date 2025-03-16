@@ -13,11 +13,11 @@ jobs:
     name: PHPStan for WordPress ${{ matrix.php-version }}
     steps:
       - name: Checkout
-        uses: https://code.forgejo.org/actions/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Cache WordPress Setup and installed plugins (Event plugins and ActivityPub plugin).
         id: cache-wordpress
-        uses: https://code.forgejo.org/actions/cache@v4
+        uses: actions/cache@v4
         with:
           path: |
             ${{ env.WP_CORE_DIR }}
@@ -26,7 +26,7 @@ jobs:
 
       - name: Cache Composer
         id: cache-composer
-        uses: https://code.forgejo.org/actions/cache@v4
+        uses: actions/cache@v4
         with:
           path: |
             ./vendor/
@@ -34,21 +34,21 @@ jobs:
 
       - name: Setup cache environment for PHP Extensions
         id: php-extensions-cache
-        uses: https://github.com/shivammathur/cache-extensions@v1
+        uses: shivammathur/cache-extensions@v1
         with:
           php-version: ${{ matrix.php-version }}
           extensions: dom, iconv, json, libxml, zip
           key: php-extensions-cache-v1
 
       - name: Cache PHP extensions
-        uses: https://code.forgejo.org/actions/cache@v4
+        uses: actions/cache@v4
         with:
           path: ${{ steps.php-extensions-cache.outputs.dir }}
           key: ${{ steps.php-extensions-cache.outputs.key }}
           restore-keys: ${{ steps.php-extensions-cache.outputs.key }}
 
       - name: Setup PHP
-        uses: https://github.com/shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
           extensions: dom, iconv, json, libxml, zip
