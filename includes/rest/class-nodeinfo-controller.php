@@ -77,7 +77,7 @@ class Nodeinfo_Controller extends \WP_REST_Controller {
 	 *
 	 * @return \WP_REST_Response Response object.
 	 */
-	public function get_items( $request ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+	public function get_items( $request ) {
 		$response = array(
 			'links' => array(
 
@@ -95,7 +95,7 @@ class Nodeinfo_Controller extends \WP_REST_Controller {
 				),
 				array(
 					'rel'  => 'https://www.w3.org/ns/activitystreams#Application',
-					'href' => get_rest_url_by_path( 'application' ),
+					'href' => \apply_filters( 'activitypub_application_actor', get_rest_url_by_path( 'application' ), $request),
 				),
 			),
 		);
